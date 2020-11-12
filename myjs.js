@@ -26,6 +26,8 @@ function playRound(playerSelection, computerSelection){
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
 
+
+    const divRound = document.createElement('div');
     const h3RoundTitle =  document.createElement('h3');
     h3RoundTitle.textContent = 'Round ' + round;
     const pInfo = document.createElement('p');
@@ -35,10 +37,12 @@ function playRound(playerSelection, computerSelection){
     const pScore = document.createElement('p');
     pScore.textContent = `Score: Player ${playerCounter} - ${computerCounter} Computer`;
 
-    divResult.appendChild(h3RoundTitle);
-    divResult.appendChild(pInfo);
-    divResult.appendChild(pResult);
-    divResult.appendChild(pScore);
+    divRound.appendChild(pScore);
+    divRound.insertBefore(pResult, pScore);
+    divRound.insertBefore(pInfo, pResult);
+    divRound.insertBefore(h3RoundTitle, pInfo);
+
+    divResult.insertBefore(divRound, divResult.firstChild);
 
     round++;
 
@@ -46,8 +50,8 @@ function playRound(playerSelection, computerSelection){
     if(playerCounter === 5 || computerCounter === 5){
         const finalResult = document.createElement('h3');
         finalResult.textContent =
-            playerCounter === 5 ? 'Player win!' : 'Computer win!';
-        divResult.appendChild(finalResult);
+            playerCounter === 5 ? 'Final: Player win!' : 'Final: Computer win!';
+        divResult.insertBefore(finalResult, divResult.firstChild);
 
         const restartBtn = document.createElement('button');
         restartBtn.textContent = 'Restart';
@@ -57,7 +61,7 @@ function playRound(playerSelection, computerSelection){
             computerCounter = 0;
             round = 1;
         });
-        divResult.appendChild(restartBtn);
+        divResult.insertBefore(restartBtn, finalResult);
     }
 }
 
